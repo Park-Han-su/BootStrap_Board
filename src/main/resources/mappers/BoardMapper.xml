@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.sql.BoardMapper">
+
+	<select id="selectBoardList" parameterType="board"
+		resultType="map">
+		select
+		a.id,
+		a.title,
+		a.content,
+		a.file1Name,
+		a.file1SName,
+		a.reg_date,
+		a.m_id,
+		a.update_date,
+		b.email,
+		b.name
+
+		from board as a
+		inner join member as
+		b on a.m_id = b.id
+
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test=" id != null">
+				and id = #{id}
+			</if>
+		</trim>
+	</select>
+
+	<insert id="insertBoard" parameterType="board">
+		insert into board (
+		title,
+		content,
+		m_id
+		<if test="file1Name != null">
+			,file1name
+			,file1sname
+		</if>
+			) 
+		values (
+		#{title},
+		#{content},
+		#{m_id}
+		<if test="file1Name != null">
+			,#{file1name}
+			,#{file1sname}
+		</if>
+		)
+	</insert>
+
+</mapper>
+	
