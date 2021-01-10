@@ -63,7 +63,7 @@ fr-element fr-view{
 	</nav>
 	<br><br>
 	<div class="container">
-		<form action="write/insert">
+		<form action="write/insert" method="post">
 			<input type="text" class="form-control" name="title" placeholder="제목"><br>
 			<textarea class="form-control" rows="20" name="content" placeholder="내용"></textarea>
 			<input type="hidden" name="m_id" value="${sessionScope.member.id }">

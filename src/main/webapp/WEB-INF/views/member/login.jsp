@@ -45,8 +45,8 @@ th, td {
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">로그인</a></li>
-							<li><a href="#">회원가입</a></li>
+							<li><a href="/strap/board/list">게시판</a></li>
+							<li><a href="join">회원가입</a></li>
 						</ul></li>
 				</ul>
 			</div>
@@ -57,11 +57,11 @@ th, td {
 		<div class="col-lg-4"></div>
 		<div class="col-lg-4">
 			<div class="jumbotron" style="padding-top: 20px;">
-				<form  action="loginCheck">
+				<form  action="loginCheck" method="post">
 					<h3 style="text-align: center;">로그인</h3>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="email"
-							name="email" maxlength="20" required="required">
+							name="email" maxlength="30" required="required">
 					</div>
 					<div class="form-group">
 						<input type="password" class="form-control" placeholder="password"

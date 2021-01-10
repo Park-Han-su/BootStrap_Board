@@ -51,7 +51,7 @@ th, td {
 							</c:if>
 								<li><a href="#">메인</a></li>
 								<c:if test="${sessionScope.member != null }">
-								<li><a href="#">로그아웃</a></li>
+								<li><a href="/strap/member/logout">로그아웃</a></li>
 								</c:if>
 						</ul>
 						</li>

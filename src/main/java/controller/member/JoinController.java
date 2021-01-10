@@ -1,5 +1,8 @@
 package controller.member;
 
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +25,12 @@ public class JoinController {
 	}
 	
 	@PostMapping("/join")
-	public String MemberJoin(Member meber) {
-		memberService.memberJoin(meber);
-		return "redirect:/board/list";
+	public String MemberJoin(Member meber, HttpServletRequest request) {
+		int joinMember = memberService.memberJoin(meber);
+		if(joinMember==1) {
+			request.setAttribute("msg", "등록완료");
+			request.setAttribute("uri", request.getContextPath()+"/board/list");
+		}
+		return "common/alert";
 	}
 }

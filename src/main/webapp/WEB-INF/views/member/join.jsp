@@ -44,8 +44,8 @@ th, td {
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">로그인</a></li>
-							<li><a href="#">회원가입</a></li>
+							<li><a href="/strap/board/list">게시판</a></li>
+							<li><a href="login">로그인</a></li>
 						</ul></li>
 				</ul>
 			</div>
@@ -61,10 +61,10 @@ th, td {
 		<div class="col-md-12 order-md-1">
 			<h4 class="mb-3">회원정보</h4>
 			<br>
-			<form action="join" method="POST">
+			<form action="join" method="post">
 				<div class="mb-3">
 					<label for="email">이메일</label>
-					<input type="email" class="form-control" name="email" placeholder="you@example.com" required/>
+					<input type="email" class="form-control" name="email" placeholder="you@example.com" required maxlength="30"/>
 				</div>
 				<br>
 				<div class="mb-3">

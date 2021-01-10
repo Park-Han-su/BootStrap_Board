@@ -22,7 +22,7 @@ public class BoardInsertController {
 		return "/board/boardWrite";
 	}
 	
-	@GetMapping("/insert")
+	@PostMapping("/insert")
 	public String boardInsert(Board board, Model model) {
 		int count = boardWriteService.insertBoard(board);
 		String msg;
