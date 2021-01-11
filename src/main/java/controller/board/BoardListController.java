@@ -10,15 +10,20 @@ import spring.dto.board.Board;
 import spring.service.board.BoardListService;
 
 @Controller
-@RequestMapping("/board/list")
+@RequestMapping("/board")
 public class BoardListController {
 	
 	@Autowired
 	BoardListService boardListService;
 	
-	@GetMapping
+	@GetMapping("/list")
 	public String boardList(Board board, Model model) {
 		model.addAttribute("boardList",boardListService.selectBoardAllList(board));
 		return "/board/boardList";
+	}
+	
+	@GetMapping("/detail")
+	public String boardDetail() {
+		return "/board/boardDetail";
 	}
 }
