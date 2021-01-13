@@ -65,7 +65,7 @@ fr-element fr-view{
 	<div class="container">
 		<form action="write/insert" method="post">
 			<input type="text" class="form-control" name="title" placeholder="제목"><br>
-			<textarea class="form-control" rows="20" name="content" placeholder="내용"></textarea>
+			<textarea class="form-control" rows="20" name="content" wrap="hard" placeholder="내용"></textarea>
 			<input type="hidden" name="m_id" value="${sessionScope.member.id }">
 			<input type="file" name="file1" >
 			<div class="pull-right">

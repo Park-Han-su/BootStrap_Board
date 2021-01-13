@@ -13,11 +13,11 @@ th, td {
 	text-align: center;
 }
 
-#detailTitle{
+#detailTitle, #detailHead{
 	text-align: center;
 }
 
-#detailHead{
+#detailContent{
 	text-align: left;
 }
 </style>
@@ -72,22 +72,31 @@ th, td {
 	<div class="container">
 		<table class="table table-bordered">
 			<thead>
+				<c:forEach var="boardDetail" items="${detail }">
 				<tr>
-					<th width="60%" id="detailTitle">제목:${boardList.title}</th>
-						<td width="20%" id="detailHead">작성자: ${boardList.name}</td>
-						<td width="20%" id="detailHead">등록일: ${boardList.reg_date}</td>
+					<th width="60%" id="detailTitle">${boardDetail.title}</th>
+						<td width="20%" id="detailHead">${boardDetail.name}</td>
+						<td width="20%" id="detailHead"><fmt:formatDate value="${boardDetail.reg_date}" pattern="yyyy/ MM/ dd" /></td>
 				</tr>
+				</c:forEach>
 			</thead>
 			<tbody>
+				<c:forEach var="boardDetail" items="${detail }">
 					<tr>
-						<td colspan='3'>내용이 출력되야됨${boardList.content }</td>
+						<td colspan='3' id="detailContent" style="white-space:pre;"><c:out value="${boardDetail.content}" /></td>
 					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
-		<c:if test="${sessionScope.member.id == boardList.id }">
-		<a href="write" class="btn btn-default pull-right">수정</a>
-		<a href="write" class="btn btn-default pull-right">삭제</a>
-		</c:if>
+		
+		<div class="pull-right">
+			<c:forEach var="boardDetail" items="${detail }">
+				<c:if test="${sessionScope.member.id == boardDetail.m_id }">
+					<a href="#" class="btn btn-default pull-right">삭제</a>
+					<a href="#" class="btn btn-default pull-right">수정</a>
+				</c:if>
+			</c:forEach>
+		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="../js/bootstrap.js"></script>

@@ -7,26 +7,21 @@
 	<select id="selectBoardList" parameterType="board"
 		resultType="map">
 		select
-		a.id,
-		a.title,
-		a.content,
-		a.file1Name,
-		a.file1SName,
-		a.reg_date,
-		a.m_id,
-		a.update_date,
+		a.*,
 		b.email,
-		b.name
+		b.name,
+		b.id
 
 		from board as a
-		inner join member as
-		b on a.m_id = b.id
+		inner join member as b 
+		on a.m_id = b.id
 
 		<trim prefix="where" prefixOverrides="and | or">
-			<if test=" id != null">
-				and id = #{id}
+			<if test=" seq != null">
+				and a.seq = #{seq}
 			</if>
 		</trim>
+		order by a.seq desc
 	</select>
 
 	<insert id="insertBoard" parameterType="board">

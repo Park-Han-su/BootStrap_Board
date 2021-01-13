@@ -74,8 +74,8 @@ th, td {
 			<tbody>
 				<c:forEach var="boardList" items="${boardList}">
 					<tr>
-						<td width="5%">${boardList.id }</td>
-						<td width="65%">${boardList.title}</td>
+						<td width="5%">${boardList.seq }</td>
+						<td width="65%"><a href='<c:url value="/board/detail?seq=${boardList.seq }"/>'>${boardList.title}</a></td>
 						<td width="15%">${boardList.name}</td>
 						<td width="20%"><fmt:formatDate value="${boardList.reg_date}"
 								pattern="yyyy/ MM/ dd" /></td>

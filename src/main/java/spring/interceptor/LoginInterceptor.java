@@ -21,6 +21,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		//세션체크 예외 페이지
         if (requestURI.indexOf("/board/list") > -1) { 
             return true;
+        }else if(requestURI.indexOf("/board/detail") > -1){
+        	return true;
         }
 		
 		if(auth == null) {
