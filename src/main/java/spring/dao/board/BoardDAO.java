@@ -20,8 +20,20 @@ public class BoardDAO {
 		return sqlSession.selectList("spring.sql.BoardMapper.selectBoardList", board);
 	}
 	
+	public int selectCount() {
+		return sqlSession.selectOne("spring.sql.BoardMapper.selectCount");
+	}
+	
 	public int insertBoard(Board board) {
 		return sqlSession.insert("spring.sql.BoardMapper.insertBoard", board);
+	}
+	
+	public int modifyBoard(Board board) {
+		return sqlSession.update("spring.sql.BoardMapper.modifyBoard", board);
+	}
+	
+	public int deleteBoard(Board board) {
+		return sqlSession.delete("spring.sql.BoardMapper.deleteBoard", board);
 	}
 	
 }

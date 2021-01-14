@@ -75,7 +75,7 @@ th, td {
 				<c:forEach var="boardList" items="${boardList}">
 					<tr>
 						<td width="5%">${boardList.seq }</td>
-						<td width="65%"><a href='<c:url value="/board/detail?seq=${boardList.seq }"/>'>${boardList.title}</a></td>
+						<td width="65%"><a href='detail?seq=${boardList.seq }'>${boardList.title}</a></td>
 						<td width="15%">${boardList.name}</td>
 						<td width="20%"><fmt:formatDate value="${boardList.reg_date}"
 								pattern="yyyy/ MM/ dd" /></td>
@@ -88,14 +88,13 @@ th, td {
 		</c:if>
 
 		<div class="text-center">
+			<c:forEach var="pNo" begin="1" end="${page.pageCnt }">
 			<ul class="pagination">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
+				<li><a href="list?pageNo=${pNo }">${pNo}</a></li>
 			</ul>
+			</c:forEach>
 		</div>
-
+		
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="../js/bootstrap.js"></script>

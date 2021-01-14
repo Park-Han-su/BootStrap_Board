@@ -88,15 +88,16 @@ th, td {
 				</c:forEach>
 			</tbody>
 		</table>
-		
-		<div class="pull-right">
 			<c:forEach var="boardDetail" items="${detail }">
-				<c:if test="${sessionScope.member.id == boardDetail.m_id }">
-					<a href="#" class="btn btn-default pull-right">삭제</a>
-					<a href="#" class="btn btn-default pull-right">수정</a>
+				<c:if test="${sessionScope.member.id == boardDetail.m_id or sessionScope.member.id == 1 }">
+					<form action='detail/delete?seq=${boardDetail.seq}' method="post"	>
+						<input class="btn btn-default pull-right" type="submit" value="삭제">
+					</form>
+					<form action='modify?seq=${boardDetail.seq}' method="post">
+					<input class="btn btn-default pull-left" type="submit" value="수정">
+					</form>
 				</c:if>
 			</c:forEach>
-		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="../js/bootstrap.js"></script>

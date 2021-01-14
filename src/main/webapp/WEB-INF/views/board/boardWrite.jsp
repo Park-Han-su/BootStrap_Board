@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
@@ -9,17 +9,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../css/bootstrap.css">
 <style>
-
-textarea{
-	width:500px; 
-    resize:none;
+textarea {
+	width: 500px;
+	resize: none;
 }
 
-fr-element fr-view{
+fr-element fr-view {
 	width: 500px;
 	height: 500px;
 }
-
 </style>
 <title>Insert title here</title>
 </head>
@@ -61,16 +59,26 @@ fr-element fr-view{
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
-	<br><br>
+	<br>
+	<br>
 	<div class="container">
-		<form action="write/insert" method="post">
-			<input type="text" class="form-control" name="title" placeholder="제목"><br>
-			<textarea class="form-control" rows="20" name="content" wrap="hard" placeholder="내용"></textarea>
-			<input type="hidden" name="m_id" value="${sessionScope.member.id }">
-			<input type="file" name="file1" >
-			<div class="pull-right">
-			<button type="submit" class="btn btn-default">작성완료</button>
+
+		<form action='write/insert' method="post">
+			<div class="form-group">
+				<label for="exampleFormControlInput1">제목</label> <input type="text"
+					class="form-control" id="exampleFormControlInput1" name="title">
 			</div>
+			<div class="form-group">
+				<label for="exampleFormControlInput1">작성자</label> <input type="text"
+					class="form-control" id="exampleFormControlInput1" value="${sessionScope.member.name }" readonly>
+			</div>
+			<div class="form-group">
+				<label for="exampleFormControlTextarea1">내용</label>
+				<textarea class="form-control" rows="20" name="content" wrap="hard"></textarea>
+				<!-- <input type="file" name="file1"> -->
+			</div>
+			<input type="hidden" name="m_id" value="${sessionScope.member.id }">
+			<button type="submit" class="btn btn-info pull-right">작성완료</button>
 		</form>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

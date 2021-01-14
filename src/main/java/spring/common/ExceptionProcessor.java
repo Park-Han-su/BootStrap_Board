@@ -36,7 +36,7 @@ public class ExceptionProcessor {
 	@ExceptionHandler(RuntimeException.class)
 	public String runtimeException(RuntimeException ex, HttpServletRequest request) {
 		logger.error(ex.getMessage(), ex);
-		request.setAttribute("uri", request.getContextPath()+"/main");
+		request.setAttribute("uri", request.getContextPath()+"/board/list");
 		request.setAttribute("msg", "RuntimeException");
 		return "common/alert";
 	}
@@ -44,7 +44,7 @@ public class ExceptionProcessor {
 	@ExceptionHandler(Exception.class)
 	public String sqlException(Exception ex, HttpServletRequest request) {
 		logger.error(ex.getMessage(), ex);
-		request.setAttribute("uri", request.getContextPath()+"/main");
+		request.setAttribute("uri", request.getContextPath()+"/board/list");
 		request.setAttribute("msg", "SQLException");
 		return "common/alert";
 	}
@@ -56,7 +56,7 @@ public class ExceptionProcessor {
 				.stream()
 				.map(error -> (((DefaultMessageSourceResolvable)error.getArguments()[0]).getDefaultMessage()+":"+error.getDefaultMessage()))
 				.collect(Collectors.joining("\n"));
-		request.setAttribute("uri", request.getContextPath()+"/main");
+		request.setAttribute("uri", request.getContextPath()+"/board/list");
 		request.setAttribute("msg", errorCodes);
 		return "common/alert";
 	}

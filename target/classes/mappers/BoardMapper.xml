@@ -13,7 +13,7 @@
 		b.id
 
 		from board as a
-		inner join member as b 
+		inner join member as b
 		on a.m_id = b.id
 
 		<trim prefix="where" prefixOverrides="and | or">
@@ -22,6 +22,16 @@
 			</if>
 		</trim>
 		order by a.seq desc
+	  	<trim>
+	  		<if test="pageIndex != null">
+		  	limit #{pageIndex}, #{perPageCount}
+	  		</if>
+	  	</trim>
+	</select>
+
+	<select id="selectCount" resultType="int">
+		select count(*)
+		from board
 	</select>
 
 	<insert id="insertBoard" parameterType="board">
@@ -31,19 +41,35 @@
 		m_id
 		<if test="file1Name != null">
 			,file1name
-			,file1sname
+			,file1Sname
 		</if>
-			) 
+		)
 		values (
 		#{title},
 		#{content},
 		#{m_id}
 		<if test="file1Name != null">
 			,#{file1name}
-			,#{file1sname}
+			,#{file1Sname}
 		</if>
 		)
 	</insert>
+
+	<update id="modifyBoard" parameterType="board">
+		UPDATE board
+		SET
+		title =
+		#{title},
+		content = #{content},
+		update_date = CURRENT_TIMESTAMP
+		WHERE seq = #{seq}
+	</update>
+
+	<delete id="deleteBoard" parameterType="board">
+		delete from board
+		where
+		seq = #{seq}
+	</delete>
 
 </mapper>
 	
