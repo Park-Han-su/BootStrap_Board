@@ -19,7 +19,7 @@ public class Board {
 	private String m_id;
 	private MultipartFile file1;
 	private String file1Name;
-	private String file1Sname;
+	private String file1SName;
 	private String update_date;
 	private Long pageIndex;
 	private Long perPageCount;

@@ -23,6 +23,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
             return true;
         }else if(requestURI.indexOf("/board/detail") > -1){
         	return true;
+        }else if(requestURI.indexOf("/board/insertComment") > -1) {
+        	return true;
+        }else if(requestURI.indexOf("/board/ReadComment") > -1) {
+        	return true;
         }
 		
 		if(auth == null) {

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import spring.common.Page;
 import spring.dto.board.Board;
+import spring.dto.board.Comment;
 
 public interface BoardMapper {
 
@@ -13,5 +14,6 @@ public interface BoardMapper {
 	public int insertBoard(Board board);
 	public int deleteBoard(Board board);
 	public int modifyBoard(Board board);
-	
+	public int insertComment(Comment comment);
+	public List<Comment> selectCommetn();
 }

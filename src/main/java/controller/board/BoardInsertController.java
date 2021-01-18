@@ -16,8 +16,12 @@ import spring.dto.board.Board;
 import spring.service.board.BoardService;
 
 @Controller
+@PropertySource("classpath:application.properties")
 @RequestMapping("/board/write")
 public class BoardInsertController {
+	
+	@Value("${file.upload.location}")
+	private String fileUploadLocation;
 	
 	@Autowired
 	BoardService boardService;
@@ -34,8 +38,19 @@ public class BoardInsertController {
 	
 	@PostMapping("/insert")
 	public String boardInsert(Board board, Model model) throws Exception{
-			int count = boardService.insertBoard(board);
+			MultipartFile file1 = board.getFile1();
+			String file1Name = file1.getOriginalFilename();
 			String msg;
+			if (!"".equals(file1Name)) {
+				String fileName = file1Name.substring(0, file1Name.lastIndexOf("."));
+				String extension = file1Name.substring(file1Name.lastIndexOf(".") + 1);
+				String file1SName = getUniqueFileName(fileName, extension);
+				File uploadFile = new File(fileUploadLocation + file1SName);
+				file1.transferTo(uploadFile);
+				board.setFile1Name(file1Name);
+				board.setFile1SName(file1SName);
+			}
+			int count = boardService.insertBoard(board);
 			if(count == 1) {
 				msg = "등록완료";
 			}else {
@@ -44,4 +59,9 @@ public class BoardInsertController {
 			model.addAttribute("msg",msg);
 		return "/board/boardInsertPage";
 	}
+	
+	private static String getUniqueFileName(String fileName, String extension) {
+		return fileName + "_" + System.currentTimeMillis() + "_" + System.nanoTime() + "." + extension;
+	}
+	
 }

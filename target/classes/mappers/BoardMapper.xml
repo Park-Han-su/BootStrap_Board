@@ -14,19 +14,19 @@
 
 		from board as a
 		inner join member as b
-		on a.m_id = b.id
-
+		on
+		a.m_id = b.id
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test=" seq != null">
 				and a.seq = #{seq}
 			</if>
 		</trim>
 		order by a.seq desc
-	  	<trim>
-	  		<if test="pageIndex != null">
-		  	limit #{pageIndex}, #{perPageCount}
-	  		</if>
-	  	</trim>
+		<trim>
+			<if test="pageIndex != null">
+				limit #{pageIndex}, #{perPageCount}
+			</if>
+		</trim>
 	</select>
 
 	<select id="selectCount" resultType="int">
@@ -40,8 +40,8 @@
 		content,
 		m_id
 		<if test="file1Name != null">
-			,file1name
-			,file1Sname
+			,file1Name
+			,file1SName
 		</if>
 		)
 		values (
@@ -49,8 +49,8 @@
 		#{content},
 		#{m_id}
 		<if test="file1Name != null">
-			,#{file1name}
-			,#{file1Sname}
+			,#{file1Name}
+			,#{file1SName}
 		</if>
 		)
 	</insert>
@@ -62,7 +62,8 @@
 		#{title},
 		content = #{content},
 		update_date = CURRENT_TIMESTAMP
-		WHERE seq = #{seq}
+		WHERE seq
+		= #{seq}
 	</update>
 
 	<delete id="deleteBoard" parameterType="board">
@@ -70,6 +71,27 @@
 		where
 		seq = #{seq}
 	</delete>
+
+	<insert id="insertComment">
+		insert into comment(
+		comment,
+		b_seq,
+		m_id
+		)
+		values(
+		#{comment},
+		#{b_seq},
+		#{m_id}
+		)
+	</insert>
+
+	<select id="selectComment" parameterType="comment" 
+		resultType="comment">
+		select *
+		from comment as c 
+		inner join board as b
+		on c.b_seq = b.seq
+	</select>
 
 </mapper>
 	

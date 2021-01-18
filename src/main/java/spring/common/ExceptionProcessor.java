@@ -32,7 +32,6 @@ public class ExceptionProcessor {
 		return "common/alert";
 	}
 	
-	
 	@ExceptionHandler(RuntimeException.class)
 	public String runtimeException(RuntimeException ex, HttpServletRequest request) {
 		logger.error(ex.getMessage(), ex);
