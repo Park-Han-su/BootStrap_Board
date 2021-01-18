@@ -141,7 +141,53 @@ th, td {
 		    getCommentList();
 		    
 		});
+<<<<<<< HEAD
 
+=======
+		
+		function getCommentList(){
+		    
+		    $.ajax({
+		        type:'GET',
+		        url : "<c:url value='/board/ReadComment'/>",
+		        dataType : "json",
+		        data:$("#commentForm").serialize(),
+		        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+		        success : function(data){
+		            
+		            var html = "";
+		            var cCnt = data.length;
+		            
+		            if(data.length > 0){
+		                
+		                for(i=0; i<data.length; i++){
+		                    html += "<div>";
+		                    html += "<div><table class='table'><h6><strong>"+data[i].writer+"</strong></h6>";
+		                    html += data[i].comment + "<tr><td></td></tr>";
+		                    html += "</table></div>";
+		                    html += "</div>";
+		                }
+		                
+		            } else {
+		                
+		                html += "<div>";
+		                html += "<div><table class='table'><h6><strong>등록된 댓글이 없습니다.</strong></h6>";
+		                html += "</table></div>";
+		                html += "</div>";
+		                
+		            }
+		            
+		            $("#cCnt").html(cCnt);
+		            $("#commentList").html(html);
+		            
+		        },
+		        error:function(request,status,error){
+		            
+		       }
+		        
+		    });
+		}
+>>>>>>> 8eb447b0a80ec862330d0b7f77e0800964acb61d
 	</script>
 
 </body>

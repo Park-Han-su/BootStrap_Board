@@ -90,7 +90,11 @@
 		select *
 		from comment as c 
 		inner join board as b
+<<<<<<< HEAD
 		on c.b_seq = #{b_seq} = b.seq
+=======
+		on c.b_seq = b.seq
+>>>>>>> 8eb447b0a80ec862330d0b7f77e0800964acb61d
 	</select>
 
 </mapper>
