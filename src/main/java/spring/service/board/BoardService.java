@@ -11,6 +11,7 @@ import spring.common.Page;
 import spring.common.PageCount;
 import spring.dao.board.BoardDAO;
 import spring.dto.board.Board;
+import spring.dto.board.Comment;
 
 @Service
 public class BoardService {
@@ -43,6 +44,14 @@ public class BoardService {
 	
 	public int insertBoard(Board board) {
 		return boardDAO.insertBoard(board);
+	}
+	
+	public int insertComment(Comment comment) {
+		return boardDAO.insertComment(comment);
+	}
+	
+	public List<Comment> selectComment(){
+		return boardDAO.selectComment();
 	}
 	
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import spring.dto.board.Board;
+import spring.dto.board.Comment;
 
 @Repository
 public class BoardDAO {
@@ -34,6 +35,14 @@ public class BoardDAO {
 	
 	public int deleteBoard(Board board) {
 		return sqlSession.delete("spring.sql.BoardMapper.deleteBoard", board);
+	}
+	
+	public int insertComment(Comment comment) {
+		return sqlSession.insert("spring.sql.BoardMapper.insertComment", comment);
+	}
+	
+	public List<Comment> selectComment(){
+		return sqlSession.selectList("spring.sql.BoardMapper.selectComment");
 	}
 	
 }
