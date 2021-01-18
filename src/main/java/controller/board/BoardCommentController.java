@@ -28,10 +28,7 @@ public class BoardCommentController {
 	
 	@GetMapping(value="/readComment")
 	public ResponseEntity ReadComment() {
-<<<<<<< HEAD
 		boardService.selectComment();
-=======
->>>>>>> 8eb447b0a80ec862330d0b7f77e0800964acb61d
 		return null;
 	}
 	        
