@@ -42,15 +42,24 @@ th, td {
 		<c:if test="${sessionScope.member != null }">
 		<a href="write" class="btn btn-default pull-right">작성</a>
 		</c:if>
-
+		
 		<div class="text-center">
+			<c:if test="${page.pageNo > 1 }">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link" href="list?pageNo=${page.pageNo-1 }">Previous</a></li>
+				</ul>
+			</c:if>
 			<c:forEach var="pNo" begin="1" end="${page.pageCnt }">
 			<ul class="pagination">
-				<li><a href="list?pageNo=${pNo }">${pNo}</a></li>
+				<li class="page-item"><a class="page-link" href="list?pageNo=${pNo }">${pNo}</a></li>
 			</ul>
 			</c:forEach>
+			<c:if test="${page.pageNo < page.pageCnt }">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link" href="list?pageNo=${page.pageNo+1 }">Next</a></li>
+				</ul>
+			</c:if>
 		</div>
 	</div>
-
 </body>
 </html>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="spring.sql.BoardMapper">
+<mapper namespace="mappers.BoardMapper">
 
 	<select id="selectBoardList" parameterType="board"
 		resultType="map">
@@ -56,14 +56,12 @@
 	</insert>
 
 	<update id="modifyBoard" parameterType="board">
-		UPDATE board
-		SET
-		title =
-		#{title},
+		update board
+		set
+		title = #{title},
 		content = #{content},
 		update_date = CURRENT_TIMESTAMP
-		WHERE seq
-		= #{seq}
+		WHERE seq = #{seq}
 	</update>
 
 	<delete id="deleteBoard" parameterType="board">
@@ -72,7 +70,7 @@
 		seq = #{seq}
 	</delete>
 
-	<insert id="insertComment">
+	<insert id="insertComment" parameterType="comment">
 		insert into comment(
 		comment,
 		b_seq,
@@ -92,6 +90,19 @@
 		inner join board as b
 		on c.b_seq = #{b_seq} = b.seq
 	</select>
+	
+	<update id="modifyComment" parameterType="comment">
+		update comment
+		set 
+		comment = #{comment}
+		where seq = #{seq}
+	</update>
+	
+	<delete id="deleteComment" parameterType="comment">
+		delete 
+		from comment
+		where seq = #{seq}
+	</delete>
 
 </mapper>
 	

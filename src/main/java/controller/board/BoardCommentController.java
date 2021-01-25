@@ -5,6 +5,7 @@ package controller.board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +28,17 @@ public class BoardCommentController {
 	}
 	
 	@GetMapping(value="/readComment")
-	public ResponseEntity ReadComment() {
-		boardService.selectComment();
-		return null;
+	public ResponseEntity ReadComment(Comment comment) {
+		return ResponseEntity.ok(boardService.selectComment(comment));
 	}
-	        
+	
+	@PostMapping("modifyComment")
+	public ResponseEntity modifyComment(Comment comment) {
+		return ResponseEntity.ok(boardService.modifyComment(comment));
+	}
+	
+	@PostMapping("deleteComment")
+	public ResponseEntity deleteComment(Comment comment) {
+		return ResponseEntity.ok(boardService.deleteComment(comment));
+	}
 }

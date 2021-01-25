@@ -15,16 +15,25 @@ textarea {
 	resize: none;
 }
 
+th, td {
+	text-align: center;
+}
+
 #detailTitle, #detailHead {
 	text-align: center;
 }
 
+.comment.empty{
+	text-align: center;
+}
+
+#detailContent {
+	text-align: left;
+}
 </style>
 <title>Insert title here</title>
 </head>
 <body>
-
-	<!-- 게시판 상세보기 -->
 	<div class="container">
 		<table class="table table-bordered">
 			<c:forEach var="boardDetail" items="${detail }">
@@ -52,45 +61,36 @@ textarea {
 						</c:if>
 					</td>
 				</tr>
- 				<c:if test="${boardDetail.file1Name ne null}">
+				<c:if test="${null ne boardDetail.file1Name }">
 					<tr>
 						<td colspan='3'><a
 							href="download?file1Name=${boardDetail.file1Name }&file1SName=${boardDetail.file1SName }"
 							id='download' onclick="loginCheck()">${boardDetail.file1Name }</a></td>
 					</tr>
 				</c:if>
-						<c:if
-							test="${sessionScope.member.id == boardDetail.m_id or sessionScope.member.id == 1 }">
-							<tr>
-								<td>
-									<form action='modify?seq=${boardDetail.seq}' method="post">
-										<input class="btn btn-default pull-left" type="submit" value="수정">
-									</form>
-									<form action='detail/delete?seq=${boardDetail.seq}' method="post">
-										<input class="btn btn-default pull-left" type="submit" value="삭제">
-									</form>
-								</td>
-							</tr>
-						</c:if>
 			</c:forEach>
-		</table>
-		
-		<!-- 댓글 Form -->
-		<table class="table table-bordered">
 			<tr>
 				<td>
-					<div class="commentForm">
-						<div class="commentList"></div>
-						<textarea class="form-control" rows="5" id="comment" placeholder="댓글을 입력하세요"></textarea>
-						<button type="button" id="addComment" class="btn btn-primary btn-block">저장</button>
+					<textarea class="form-control" rows="5" id="comment"></textarea>
+					<div class="dbComment">
+						<div class="modifyComment"></div>
 					</div>
+					<button type="button" id="addComment" class="btn btn-primary btn-block">저장</button>
 				</td>
 			</tr>
 		</table>
-		
+		<c:forEach var="boardDetail" items="${detail }">
+			<c:if
+				test="${sessionScope.member.id == boardDetail.m_id or sessionScope.member.id == 1 }">
+				<form action='detail/delete?seq=${boardDetail.seq}' method="post">
+					<input class="btn btn-default pull-right" type="submit" value="삭제">
+				</form>
+				<form action='modify?seq=${boardDetail.seq}' method="post">
+					<input class="btn btn-default pull-left" type="submit" value="수정">
+				</form>
+			</c:if>
+		</c:forEach>
 	</div>
-	
-	
 	<c:if test="${sessionScope.member.id eq null }">
 		<script>
 					function loginCheck() {
@@ -108,10 +108,10 @@ textarea {
 			}else{
 				var url = './insertComment'
 	 			$.ajax({
-					async : true
-					,method: "post"
-					,url: url
-					,data: JSON.stringify({
+					async : true,
+					method: "post",
+					url: url,
+					data: JSON.stringify({
 							m_id: $('#m_id').val()
 							,b_seq: $('#b_seq').val()
 							,comment:$('#comment').val()
@@ -121,6 +121,7 @@ textarea {
 						alert('등록완료')
 						$('#comment').val('');
 						test();
+						
 					})
 			}
 		});
@@ -138,65 +139,41 @@ textarea {
 				}
 			}).done(function(data){
 				var a =''; 
-				$.each(data,function(idx,data){
+				$.each(data,function(test,data){
 			        a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px; text-align:left;">';
 			        a += '<div class="commentInfo'+data.seq+'">'+' 작성자 : '+data.m_id+'<br>';
-			        a += '<input type="hidden" id=commentSeq value="'+data.seq+'">';
-			        a += '<div class="commentContent'+data.seq+'"> <p id="commentContent"> '+data.comment +'</p>';
-			        if(data.m_id == '${sessionScope.member.id}'){
-			        a += '<a id="modify" onclick="commentUpdate('+data.seq+',\''+data.comment+'\');"> 수정 </a>';
-			        a += '<a onclick="commentDelete('+data.seq+');"> 삭제 </a> '+'<br>';
-			        }
-			        a += '</div></div></div>';
+			        a += '<div class="commentContent'+data.seq+'"> <p> 내용 : '+data.comment +'</p>';
+			        a += '<a onclick="commentUpdate('+data.seq+',\''+data.comment+'\');"> 수정 </a>';
+			        a += '<a onclick="commentDelete('+data.seq+');"> 삭제 </a> </div>'+'<br>';
+			        a += '</div></div>';
 				})
-				$(".commentList").html(a);
+				$(".dbComment").html(a);
 			}).fail(function(){
 				
 			});
 		}
 		
 		function commentUpdate(seq,comment){
-		    var a ='';
-		    
-		    a += '<div class="input-group">';
-		    a += '<input type="text" class="form-control" name="Modifycomment'+seq+'" value="'+comment+'"/>';
-		    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+seq+');">수정</button> </span>';
-		    a += '</div>';
-		    
-		    $('.commentContent'+seq).html(a);
-		   
-		}
-
-		//댓글 수정
-		function commentUpdateProc(seq){
-		    var modifyComment = $('[name=Modifycomment'+seq+']').val();
-		    $.ajax({
-		        type : "post"
-		        ,url : './modifyComment'
-		        ,datatype : 'json'
-		        ,data : {'comment' : modifyComment
-		        		, 'seq' : seq}
-		    }).done(function(data){
-		    	alert('수정완료')
-		    	if(data==1) test();
-		    }).fail(function(){
-		    	alert('수정실패')
-		    })
+			alert('check');
+			var a ='<textarea rows="5" cols="5">여기다가 글쓰자</textarea>';
+			$('.modifyComment').html(a);
 		}
 		
-		//댓글 삭제 
-		function commentDelete(seq){
-		    $.ajax({
-		        type : 'post'
-		        ,url : './deleteComment'
-		        ,data :{'seq' :seq}
-		    }).done(function(data){
-		    	alert(seq)
-		    	if(data==1) test();
-		    }).fail(function(){
-		    	alert(seq)
-		    });
-		}
 	</script>
+	
+<!-- 				var url = './modifyComment'
+	 			$.ajax({
+					async : true,
+					method: "post",
+					url: url,
+					data: JSON.stringify({
+						 seq 
+						,comment
+						}),
+					contentType : 'application/json'
+	 			}).done(function(){
+	 				console.log(url)
+	 				alert('수정완료')
+	 			}) -->
 </body>
 </html>

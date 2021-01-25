@@ -50,8 +50,16 @@ public class BoardService {
 		return boardDAO.insertComment(comment);
 	}
 	
-	public List<Comment> selectComment(){
-		return boardDAO.selectComment();
+	public List<Comment> selectComment(Comment comment){
+		return boardDAO.selectComment(comment);
+	}
+	
+	public int modifyComment(Comment comment) {
+		return boardDAO.modifyComment(comment);
+	}
+	
+	public int deleteComment(Comment comment) {
+		return boardDAO.deleteComment(comment);
 	}
 	
 }

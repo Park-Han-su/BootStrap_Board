@@ -13,10 +13,10 @@ public class MemberDAO {
 	SqlSession sqlSession;
 	
 	public Member loginCheck(Member member) {
-		return sqlSession.selectOne("spring.sql.MemberMapper.login", member);
+		return sqlSession.selectOne("mappers.MemberMapper.login", member);
 	}
 	
 	public int memberJoin(Member member) {
-		return sqlSession.insert("spring.sql.MemberMapper.memberJoin", member);
+		return sqlSession.insert("mappers.MemberMapper.memberJoin", member);
 	}
 }

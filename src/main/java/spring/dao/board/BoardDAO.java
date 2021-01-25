@@ -18,31 +18,39 @@ public class BoardDAO {
 	SqlSession sqlSession;
 
 	public List<Map> selectBoardList(Board board){
-		return sqlSession.selectList("spring.sql.BoardMapper.selectBoardList", board);
+		return sqlSession.selectList("mappers.BoardMapper.selectBoardList", board);
 	}
 	
 	public int selectCount() {
-		return sqlSession.selectOne("spring.sql.BoardMapper.selectCount");
+		return sqlSession.selectOne("mappers.BoardMapper.selectCount");
 	}
 	
 	public int insertBoard(Board board) {
-		return sqlSession.insert("spring.sql.BoardMapper.insertBoard", board);
+		return sqlSession.insert("mappers.BoardMapper.insertBoard", board);
 	}
 	
 	public int modifyBoard(Board board) {
-		return sqlSession.update("spring.sql.BoardMapper.modifyBoard", board);
+		return sqlSession.update("mappers.BoardMapper.modifyBoard", board);
 	}
 	
 	public int deleteBoard(Board board) {
-		return sqlSession.delete("spring.sql.BoardMapper.deleteBoard", board);
+		return sqlSession.delete("mappers.BoardMapper.deleteBoard", board);
 	}
 	
 	public int insertComment(Comment comment) {
-		return sqlSession.insert("spring.sql.BoardMapper.insertComment", comment);
+		return sqlSession.insert("mappers.BoardMapper.insertComment", comment);
 	}
 	
-	public List<Comment> selectComment(){
-		return sqlSession.selectList("spring.sql.BoardMapper.selectComment");
+	public List<Comment> selectComment(Comment comment){
+		return sqlSession.selectList("mappers.BoardMapper.selectComment",comment);
+	}
+	
+	public int modifyComment(Comment comment) {
+		return sqlSession.update("mappers.BoardMapper.modifyComment", comment);
+	}
+	
+	public int deleteComment(Comment comment) {
+		return sqlSession.delete("mappers.BoardMapper.deleteComment", comment);
 	}
 	
 }

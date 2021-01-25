@@ -32,7 +32,6 @@ public class BoardListController {
 		return "/board/boardList";
 	}
 	
-	
 	@GetMapping("/detail{seq}")
 	public String boardDetail(Board board, Model model) {
 		model.addAttribute("detail",boardListService.selectBoardAllList(board));
@@ -69,5 +68,11 @@ public class BoardListController {
 			model.addAttribute("uri", request.getContextPath()+"/board/list");
 		}
 		return "/common/alert";
+	}
+	
+	@GetMapping("/test{seq}")
+	public String ajaxtest(Board board, Model model) {
+		model.addAttribute("boardContent",boardListService.selectBoardAllList(board));
+		return "/board/ajax";
 	}
 }
