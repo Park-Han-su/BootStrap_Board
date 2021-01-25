@@ -23,8 +23,7 @@ public class BoardCommentController {
 	
 	@PostMapping("/insertComment")
 	public ResponseEntity insertComment(@RequestBody Comment comment) {
-		boardService.insertComment(comment);
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok(boardService.insertComment(comment));
 	}
 	
 	@GetMapping(value="/readComment")

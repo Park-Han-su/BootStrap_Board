@@ -66,6 +66,8 @@ textarea {
 									<form action='modify?seq=${boardDetail.seq}' method="post">
 										<input class="btn btn-default pull-left" type="submit" value="수정">
 									</form>
+									<script>
+									</script>
 									<form action='detail/delete?seq=${boardDetail.seq}' method="post">
 										<input class="btn btn-default pull-left" type="submit" value="삭제">
 									</form>
@@ -186,16 +188,20 @@ textarea {
 		
 		//댓글 삭제 
 		function commentDelete(seq){
-		    $.ajax({
-		        type : 'post'
-		        ,url : './deleteComment'
-		        ,data :{'seq' :seq}
-		    }).done(function(data){
-		    	alert(seq)
-		    	if(data==1) test();
-		    }).fail(function(){
-		    	alert(seq)
-		    });
+			var check = confirm("정말로 삭제 하시겠습니까?");
+			if(check == true){
+			    $.ajax({
+			        type : 'post'
+			        ,url : './deleteComment'
+			        ,data :{'seq' :seq}
+			    }).done(function(data){
+			    	if(data==1) test();
+			    }) .fail(function(){
+			    	alert(seq)
+			    });
+			}else{
+				test();
+			}
 		}
 	</script>
 </body>

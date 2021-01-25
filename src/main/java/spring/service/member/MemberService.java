@@ -23,6 +23,15 @@ public class MemberService{
 		return new AuthInfo(DbMember.getId(), DbMember.getEmail(), DbMember.getName()); 
 	}
 	
+	public boolean emailCheck(Member member) {
+		Member DbMember = memberDAO.emailCheck(member);
+		if(DbMember != null) {
+			return true;
+		}else {
+			return false;
+		}			
+	}
+	
 	public int memberJoin(Member member) {
 		Member checkMember = memberDAO.loginCheck(member);
 		if(checkMember!=null) {

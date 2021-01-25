@@ -19,4 +19,8 @@ public class MemberDAO {
 	public int memberJoin(Member member) {
 		return sqlSession.insert("mappers.MemberMapper.memberJoin", member);
 	}
+	
+	public Member emailCheck(Member member) {
+		return sqlSession.selectOne("mappers.MemberMapper.login", member);
+	}
 }
