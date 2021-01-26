@@ -2,6 +2,7 @@ package controller.member;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class JoinController {
 	}
 	
 	@PostMapping("/join")
-	public String MemberJoin(Member meber, HttpServletRequest request) {
+	public String MemberJoin(@Valid Member meber, HttpServletRequest request) {
 		int joinMember = memberService.memberJoin(meber);
 		if(joinMember==1) {
 			request.setAttribute("msg", "등록완료");

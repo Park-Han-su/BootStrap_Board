@@ -31,12 +31,8 @@ th, td {
 			<form action="join" method="post">
 				<div class="mb-3">
 					<label for="email">이메일</label>
-					<button type="button" id="checkbtn" class="btn btn-default pull-right">중복확인</button>
-					<input type="email" class="form-control" name="email" placeholder="you@example.com" required maxlength="30"/>
-					<br>
-					<div class="mb-3" id="checkMsg" style="display:none;">
-					<input type="text" class="form-control" name="name" required/>
-					</div>
+					<input type="email" id="checkEmail" class="form-control" name="email" placeholder="you@example.com" maxlength="30" required/>
+					<div class="mb-3" id="checkMsg" style="display:none;"></div>
 				</div>
 				<br>
 				<div class="mb-3">
@@ -59,25 +55,28 @@ th, td {
 	
 	<script type="text/javascript">
 		
-		$("#checkbtn").on("click",function(){
+		$("#checkEmail").on("blur",function(){
 			var email = $('[name=email]').val();
-			$.ajax({
-		        type : 'get'
-		        ,url : './emailCheck'
-		        ,dataType : 'json'
-		        ,data :{'email' : email}
-		    }).done(function(data){
-		    	if(data){
-		    		$('#checkMsg').html('<p style="color:red">사용불가</p>');
-		    		$('#checkMsg').css('display','block');
-		    	}else{
-		    		$('#checkMsg').html('<p style="color:blue">사용가능</p>');
-		    	}
-		    })
+			var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			if(email != "" && email.match(regExp) != null){
+				$.ajax({
+			        type : 'get'
+			        ,url : './emailCheck'
+			        ,dataType : 'json'
+			        ,data :{'email' : email}
+			    }).done(function(data){
+			    	if(data){
+			    		$('#checkMsg').html('<p style="color:red">사용불가</p>');
+			    		$('#checkMsg').css('display','block');
+			    	}else{
+			    		$('#checkMsg').html('<p style="color:blue">사용가능</p>');
+			    		$('#checkMsg').css('display','block');
+			    	}
+			    })
+			}else{
+				alert('올바른 email 주소를 입력해주세요');
+			}
 		});
 	</script>
-
-	<script src="../js/bootstrap.js"></script>
-
 </body>
 </html>

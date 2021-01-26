@@ -92,16 +92,8 @@ textarea {
 		
 	</div>
 	
-	
-	<c:if test="${sessionScope.member.id eq null }">
-		<script>
-					function loginCheck() {
-						alert('로그인후 이용 가능합니다.');
-					}
-		</script>
-	</c:if>
 	<script>
-		window.onload = test();
+		window.onload = readComment();
 		document.getElementById('addComment').addEventListener('click',function(){
 			if(${sessionScope.member == null}){
 				alert('로그인후 이용 가능합니다.')
@@ -109,6 +101,7 @@ textarea {
 				alert('내용을 입력해주세요')
 			}else{
 				var url = './insertComment'
+				var m_name = '${sessionScope.member.name}';
 	 			$.ajax({
 					async : true
 					,method: "post"
@@ -117,18 +110,18 @@ textarea {
 							m_id: $('#m_id').val()
 							,b_seq: $('#b_seq').val()
 							,comment:$('#comment').val()
+							,m_name: m_name
 						}),
 						contentType : 'application/json'
 					}).done(function(){
 						alert('등록완료')
 						$('#comment').val('');
-						test();
+						readComment();
 					})
 			}
 		});
 		
-		/* read ajax 댓글 등록시 db에서 가져온 값이 중복으로 출력되는 문제 해결해야됨*/
-		function test(){
+		function readComment(){
 			var url = './readComment'
 			var b_seq = $('#b_seq').val();
 			$.ajax({
@@ -142,9 +135,10 @@ textarea {
 				var a =''; 
 				$.each(data,function(idx,data){
 			        a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px; text-align:left;">';
-			        a += '<div class="commentInfo'+data.seq+'">'+' 작성자 : '+data.m_id+'<br>';
+			        a += '<div class="commentInfo'+data.seq+'">'+' 작성자 : '+data.m_name+'<br>';
 			        a += '<input type="hidden" id=commentSeq value="'+data.seq+'">';
 			        a += '<div class="commentContent'+data.seq+'"> <p id="commentContent"> '+data.comment +'</p>';
+			        a += '<p>'+data.reg_date+'</p>'
 			        if(data.m_id == '${sessionScope.member.id}'){
 			        a += '<a id="modify" onclick="commentUpdate('+data.seq+',\''+data.comment+'\');"> 수정 </a>';
 			        a += '<a onclick="commentDelete('+data.seq+');"> 삭제 </a> '+'<br>';
@@ -180,7 +174,7 @@ textarea {
 		        		, 'seq' : seq}
 		    }).done(function(data){
 		    	alert('수정완료')
-		    	if(data==1) test();
+		    	if(data==1) readComment();
 		    }).fail(function(){
 		    	alert('수정실패')
 		    })
@@ -195,12 +189,12 @@ textarea {
 			        ,url : './deleteComment'
 			        ,data :{'seq' :seq}
 			    }).done(function(data){
-			    	if(data==1) test();
+			    	if(data==1) readComment();
 			    }) .fail(function(){
 			    	alert(seq)
 			    });
 			}else{
-				test();
+				readComment();
 			}
 		}
 	</script>

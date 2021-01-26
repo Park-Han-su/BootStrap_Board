@@ -14,7 +14,7 @@ public class Board {
 	private Long seq;
 	private String title;
 	private String content;
-	@DateTimeFormat(pattern = "yy.MM.dd.HH:mm")
+	@DateTimeFormat(pattern = "yy.MM.dd.HH:MM")
 	private LocalDateTime reg_date;
 	private String m_id;
 	private MultipartFile file1;

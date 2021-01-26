@@ -1,6 +1,8 @@
 package spring.dto.board;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -10,7 +12,8 @@ public class Comment {
 	private Long seq;
 	private Long b_seq;
 	private Long m_id;
+	private String m_name;
 	private String comment;
-	private LocalDateTime reg_date;
+	private String reg_date;
 	
 }

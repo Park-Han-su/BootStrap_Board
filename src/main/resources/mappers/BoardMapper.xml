@@ -18,7 +18,7 @@
 		a.m_id = b.id
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test=" seq != null">
-				and a.seq = #{seq}
+				a.seq = #{seq}
 			</if>
 		</trim>
 		order by a.seq desc
@@ -61,7 +61,7 @@
 		title = #{title},
 		content = #{content},
 		update_date = CURRENT_TIMESTAMP
-		WHERE seq = #{seq}
+		where seq = #{seq}
 	</update>
 
 	<delete id="deleteBoard" parameterType="board">
@@ -74,20 +74,22 @@
 		insert into comment(
 		comment,
 		b_seq,
-		m_id
+		m_id,
+		m_name
 		)
 		values(
 		#{comment},
 		#{b_seq},
-		#{m_id}
+		#{m_id},
+		#{m_name}
 		)
 	</insert>
 
 	<select id="selectComment" parameterType="comment" 
 		resultType="comment">
-		select *
+		select c.*
 		from comment as c 
-		inner join board as b
+		left join board as b
 		on c.b_seq = #{b_seq} = b.seq
 	</select>
 	
@@ -95,6 +97,7 @@
 		update comment
 		set 
 		comment = #{comment}
+		,reg_date = now()
 		where seq = #{seq}
 	</update>
 	

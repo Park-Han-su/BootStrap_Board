@@ -1,7 +1,8 @@
 package spring.dto.member;
 
-import java.time.LocalDateTime;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
@@ -9,8 +10,11 @@ import lombok.Data;
 public class Member {
 
 	private int id;
+	@Email
 	private String email;
+	@NotBlank
 	private String password;
+	@NotBlank
 	private String name;
 	private String regdate;
 }
