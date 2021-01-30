@@ -17,6 +17,7 @@ th, td {
 <title>Insert title here</title>
 </head>
 <body>
+	<!-- 전체 리스트 출력 -->
 	<div class="container">
 		<table class="table table-hover">
 			<thead>
@@ -43,6 +44,7 @@ th, td {
 		<a href="write" class="btn btn-default pull-right">작성</a>
 		</c:if>
 		
+		<!-- 페이징 -->
 		<div class="text-center">
 			<c:if test="${page.pageNo > 1 }">
 				<ul class="pagination">

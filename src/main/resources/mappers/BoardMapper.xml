@@ -89,7 +89,7 @@
 		resultType="comment">
 		select c.*
 		from comment as c 
-		left join board as b
+		inner join board as b
 		on c.b_seq = #{b_seq} = b.seq
 	</select>
 	

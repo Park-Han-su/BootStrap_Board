@@ -56,7 +56,7 @@ textarea {
 					<tr>
 						<td colspan='3'><a
 							href="download?file1Name=${boardDetail.file1Name }&file1SName=${boardDetail.file1SName }"
-							id='download' onclick="loginCheck()">${boardDetail.file1Name }</a></td>
+							id='download' onclick="downloadCheck()">${boardDetail.file1Name }</a></td>
 					</tr>
 				</c:if>
 						<c:if
@@ -68,7 +68,7 @@ textarea {
 									</form>
 									<script>
 									</script>
-									<form action='detail/delete?seq=${boardDetail.seq}' method="post">
+									<form action='detail/delete?seq=${boardDetail.seq}' onsubmit="return confirm('정말 삭제 하시겠습니까?')" method="post">
 										<input class="btn btn-default pull-left" type="submit" value="삭제">
 									</form>
 								</td>
@@ -93,6 +93,17 @@ textarea {
 	</div>
 	
 	<script>
+	
+		//파일 다운로드 로그인 체크
+		function downloadCheck(){
+			if(${sessionScope.member == null}){
+				return false
+			}else{
+				return true
+			}
+		}
+	
+		//댓글 insert
 		window.onload = readComment();
 		document.getElementById('addComment').addEventListener('click',function(){
 			if(${sessionScope.member == null}){
@@ -121,6 +132,8 @@ textarea {
 			}
 		});
 		
+		
+		//댓글 get
 		function readComment(){
 			var url = './readComment'
 			var b_seq = $('#b_seq').val();
@@ -151,6 +164,7 @@ textarea {
 			});
 		}
 		
+		//댓글 수정
 		function commentUpdate(seq,comment){
 		    var a ='';
 		    
@@ -182,7 +196,7 @@ textarea {
 		
 		//댓글 삭제 
 		function commentDelete(seq){
-			var check = confirm("정말로 삭제 하시겠습니까?");
+			var check = confirm("정말 삭제 하시겠습니까?");
 			if(check == true){
 			    $.ajax({
 			        type : 'post'
@@ -197,6 +211,6 @@ textarea {
 				readComment();
 			}
 		}
-	</script>
+</script>
 </body>
 </html>

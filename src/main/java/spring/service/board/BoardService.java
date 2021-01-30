@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import spring.common.Page;
@@ -13,6 +14,7 @@ import spring.dao.board.BoardDAO;
 import spring.dto.board.Board;
 import spring.dto.board.Comment;
 
+@Transactional
 @Service
 public class BoardService {
 

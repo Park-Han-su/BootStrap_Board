@@ -3,6 +3,7 @@ package controller.member;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,9 @@ public class LoginController {
 	@Autowired
 	MemberService loginService;
 	
+	@Autowired
+	BCryptPasswordEncoder pwdEncoder;
+	
 	@GetMapping("/login")
 	public String loginPage() {
 		return "/member/login";
@@ -32,11 +36,11 @@ public class LoginController {
 	@RequestMapping("/loginCheck")
 	public String loginCheck(Member member, HttpSession session){
 		AuthInfo auth = loginService.longinCheck(member);
-			if(auth != null) {
+			if(auth == null) {
+				return "/common/alert";
+			}else {
 				session.setAttribute("member", auth);
 				return "redirect:/board/list";
-			}else {
-				return "/member/loginCheck";
 			}
 	}
 	

@@ -26,7 +26,7 @@ public class BoardCommentController {
 		return ResponseEntity.ok(boardService.insertComment(comment));
 	}
 	
-	@GetMapping(value="/readComment")
+	@GetMapping(value="/readComment{seq}")
 	public ResponseEntity ReadComment(Comment comment) {
 		return ResponseEntity.ok(boardService.selectComment(comment));
 	}
