@@ -2,6 +2,8 @@ package controller.board;
 
 import java.io.File;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -17,7 +19,6 @@ import spring.service.board.BoardService;
 
 @Controller
 @PropertySource("classpath:application.properties")
-@RequestMapping("/board/write")
 public class BoardInsertController {
 	
 	@Value("${file.upload.location}")
@@ -26,7 +27,7 @@ public class BoardInsertController {
 	@Autowired
 	BoardService boardService;
 	
-	@GetMapping
+	@GetMapping("/board/write")
 	public String boardWrite() {
 		return "/board/boardWrite";
 	}
@@ -36,8 +37,8 @@ public class BoardInsertController {
 		return "/board/summer";
 	}
 	
-	@PostMapping("/insert")
-	public String boardInsert(Board board, Model model) throws Exception{
+	@PostMapping("/board/insert")
+	public String boardInsert(@Valid Board board, Model model) throws Exception{
 			MultipartFile file1 = board.getFile1();
 			String file1Name = file1.getOriginalFilename();
 			String msg;

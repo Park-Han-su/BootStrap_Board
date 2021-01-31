@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ include file="../common/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -48,6 +49,7 @@ th, td {
 				<hr class="mb-4">
 				<button class="btn btn-primary btn-lg btn-block" type="submit">가입하기</button>
 				<hr class="mb-4">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 			</form>
 		</div>
 

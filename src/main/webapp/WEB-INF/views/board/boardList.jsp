@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ include file="../common/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -40,10 +41,11 @@ th, td {
 				</c:forEach>
 			</tbody>
 		</table>
-		<c:if test="${sessionScope.member != null }">
-		<a href="write" class="btn btn-default pull-right">작성</a>
-		</c:if>
 		
+		<sec:authorize access="isAuthenticated()">
+			<a href="write" class="btn btn-default pull-right">작성</a>
+		</sec:authorize>
+
 		<!-- 페이징 -->
 		<div class="text-center">
 			<c:if test="${page.pageNo > 1 }">

@@ -3,6 +3,8 @@ package spring.dto.board;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +18,7 @@ public class Board {
 	private String content;
 	@DateTimeFormat(pattern = "yy.MM.dd.HH:MM")
 	private LocalDateTime reg_date;
+	@NotBlank(message = "로그인후 이용 가능합니다.")
 	private String m_id;
 	private MultipartFile file1;
 	private String file1Name;

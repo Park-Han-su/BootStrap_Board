@@ -6,5 +6,7 @@
 <configuration>
 	<typeAliases>
 		<package name="spring.dto" />
+		<package name="spring.security"/>
 	</typeAliases>
 </configuration>
+

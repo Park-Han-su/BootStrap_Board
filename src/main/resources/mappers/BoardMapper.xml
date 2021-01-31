@@ -10,12 +10,12 @@
 		a.*,
 		b.email,
 		b.name,
-		b.id
+		b.code
 
 		from board as a
 		inner join member as b
 		on
-		a.m_id = b.id
+		a.m_id = b.code
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test=" seq != null">
 				a.seq = #{seq}

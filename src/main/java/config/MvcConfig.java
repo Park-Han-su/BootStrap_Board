@@ -1,5 +1,5 @@
 package config;
 
-public class MvcConfig {
+public class MvcConfig{
 
 }

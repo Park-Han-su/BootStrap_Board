@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ include file="../common/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -28,7 +29,7 @@ fr-element fr-view {
 		<script>
 			console.log('${boardDetail.name}');
 		</script>
-		<form action='modify/check' method="post">
+		<form action='modify/check?${_csrf.parameterName}=${_csrf.token}' method="post">
 			<div class="form-group">
 				<label for="exampleFormControlInput1">제목</label> <input type="text"
 					class="form-control" id="exampleFormControlInput1" name="title"

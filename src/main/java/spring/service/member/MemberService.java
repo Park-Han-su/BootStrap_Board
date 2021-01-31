@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import spring.common.MemberJoinException;
 import spring.dao.member.MemberDAO;
-import spring.dto.auth.AuthInfo;
 import spring.dto.member.Member;
+import spring.dto.securityUser.AuthInfo;
 @Transactional
 @Service
 public class MemberService {
@@ -26,7 +26,7 @@ public class MemberService {
 			throw new spring.common.LoginException("아이디를 확인하세요");
 		if(!pwdEncoder.matches(member.getPassword(),DbMember.getPassword()))
 			throw new spring.common.LoginException("비밀번호를 확인하세요");
-		return new AuthInfo(DbMember.getId(), DbMember.getEmail(), DbMember.getName());
+		return new AuthInfo(DbMember.getCode(), DbMember.getEmail(), DbMember.getName());
 	}
 
 	public boolean emailCheck(Member member) {

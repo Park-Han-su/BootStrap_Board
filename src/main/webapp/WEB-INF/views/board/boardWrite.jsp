@@ -23,22 +23,26 @@ fr-element fr-view {
 <title>Insert title here</title>
 </head>
 <body>
+	<!-- spring security session property -->
+	<sec:authentication property="principal" var="user"/>
+	
 	<div class="container">
-		<form action='write/insert' method="post" enctype="multipart/form-data">
+		<!-- spring security 사용시 파일 업로드 할때 action 에 토큰값 안보내주면 무한로그인창 ${_csrf.parameterName}=${_csrf.token} -->
+		<form action='./insert?${_csrf.parameterName}=${_csrf.token}' method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="exampleFormControlInput1">제목</label> <input type="text"
 					class="form-control" id="exampleFormControlInput1" name="title">
 			</div>
 			<div class="form-group">
 				<label for="exampleFormControlInput1">작성자</label> <input type="text"
-					class="form-control" id="exampleFormControlInput1" value="${sessionScope.member.name }" readonly>
+					class="form-control" id="exampleFormControlInput1" value=" ${user.name}" readonly>
 			</div>
 			<div class="form-group">
 				<label for="exampleFormControlTextarea1">내용</label>
 				<textarea class="form-control" rows="20" name="content" wrap="hard"></textarea>
 				<input type="file" name="file1">
 			</div>
-			<input type="hidden" name="m_id" value="${sessionScope.member.id }">
+			<input type="hidden" name="m_id" value="${user.code }">
 			<button type="submit" class="btn btn-info pull-right">작성완료</button>
 		</form>
 	</div>

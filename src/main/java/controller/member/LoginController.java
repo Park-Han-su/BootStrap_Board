@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import spring.dto.auth.AuthInfo;
 import spring.dto.member.Member;
+import spring.dto.securityUser.AuthInfo;
 import spring.service.member.MemberService;
 
 
@@ -44,9 +44,10 @@ public class LoginController {
 			}
 	}
 	
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/board/list";
-	}
+//	@GetMapping("/logout")
+//	public String logout(HttpSession session) {
+//		session.invalidate();
+//		System.out.println("로그아웃 컨트롤러>>>>>");
+//		return "redirect:/board/list";
+//	}
 }

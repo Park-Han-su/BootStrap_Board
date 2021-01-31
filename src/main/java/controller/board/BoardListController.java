@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import spring.common.Page;
-import spring.dto.auth.AuthInfo;
 import spring.dto.board.Board;
 import spring.dto.member.Member;
+import spring.dto.securityUser.AuthInfo;
 import spring.service.board.BoardService;
 
 @Controller

@@ -2,12 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ include file="../common/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}" /> 
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
 <link rel="stylesheet" href="../css/bootstrap.css">
 <style>
 textarea {
@@ -23,6 +26,9 @@ textarea {
 <title>Insert title here</title>
 </head>
 <body>
+	<!-- spring security session property -->
+	<sec:authentication property="principal" var="user"/>
+	권한체크 : ${user.authorities }
 
 	<!-- 게시판 상세보기 -->
 	<div class="container">
@@ -56,24 +62,33 @@ textarea {
 					<tr>
 						<td colspan='3'><a
 							href="download?file1Name=${boardDetail.file1Name }&file1SName=${boardDetail.file1SName }"
-							id='download' onclick="downloadCheck()">${boardDetail.file1Name }</a></td>
+							id='download' onclick="loginCheck()">${boardDetail.file1Name }</a></td>
 					</tr>
 				</c:if>
-						<c:if
-							test="${sessionScope.member.id == boardDetail.m_id or sessionScope.member.id == 1 }">
+				<sec:authorize access="isAuthenticated() and !isAnonymous()">
+					<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+						console.log('${user.authorities == ROLL_USER }')
+						<c:if test="${user.code == boardDetail.m_id}&&${user.authorities == ROLL_ADMIN }">
 							<tr>
 								<td>
-									<form action='modify?seq=${boardDetail.seq}' method="post">
-										<input class="btn btn-default pull-left" type="submit" value="수정">
-									</form>
-									<script>
+									<form
+										action='modify?seq=${boardDetail.seq}&${_csrf.parameterName}=${_csrf.token}'
+										method="post">
+										<input class="btn btn-default pull-left" type="submit"
+											value="수정">
+									</form> <script>
 									</script>
-									<form action='detail/delete?seq=${boardDetail.seq}' onsubmit="return confirm('정말 삭제 하시겠습니까?')" method="post">
-										<input class="btn btn-default pull-left" type="submit" value="삭제">
+									<form
+										action='detail/delete?seq=${boardDetail.seq}&${_csrf.parameterName}=${_csrf.token}'
+										onsubmit="return confirm('정말 삭제 하시겠습니까?')" method="post">
+										<input class="btn btn-default pull-left" type="submit"
+											value="삭제">
 									</form>
 								</td>
 							</tr>
 						</c:if>
+					</sec:authorize>
+				</sec:authorize>
 			</c:forEach>
 		</table>
 		
@@ -93,32 +108,32 @@ textarea {
 	</div>
 	
 	<script>
-	
-		//파일 다운로드 로그인 체크
-		function downloadCheck(){
-			if(${sessionScope.member == null}){
-				return false
-			}else{
-				return true
-			}
-		}
-	
-		//댓글 insert
+		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
 		window.onload = readComment();
+		<sec:authorize access="isAuthenticated() and !isAnonymous()">
+		var userCode = '${user.code}';
+		var m_name = '${user.name}';
+		</sec:authorize>
+		
 		document.getElementById('addComment').addEventListener('click',function(){
-			if(${sessionScope.member == null}){
+			if(userCode == null){
 				alert('로그인후 이용 가능합니다.')
 			}else if($('#comment').val() == '' ){
 				alert('내용을 입력해주세요')
 			}else{
 				var url = './insertComment'
-				var m_name = '${sessionScope.member.name}';
 	 			$.ajax({
 					async : true
 					,method: "post"
+					,beforeSend: function(xhr){
+						xhr.setRequestHeader(header, token);
+					    }
 					,url: url
 					,data: JSON.stringify({
-							m_id: $('#m_id').val()
+							m_id: userCode
 							,b_seq: $('#b_seq').val()
 							,comment:$('#comment').val()
 							,m_name: m_name
@@ -152,10 +167,13 @@ textarea {
 			        a += '<input type="hidden" id=commentSeq value="'+data.seq+'">';
 			        a += '<div class="commentContent'+data.seq+'"> <p id="commentContent"> '+data.comment +'</p>';
 			        a += '<p>'+data.reg_date+'</p>'
-			        if(data.m_id == '${sessionScope.member.id}'){
+			        <sec:authorize access="isAuthenticated() and !isAnonymous()">
+			        var userCode = '${user.code}';
+			        if(data.m_id == userCode){
 			        a += '<a id="modify" onclick="commentUpdate('+data.seq+',\''+data.comment+'\');"> 수정 </a>';
 			        a += '<a onclick="commentDelete('+data.seq+');"> 삭제 </a> '+'<br>';
 			        }
+					</sec:authorize>
 			        a += '</div></div></div>';
 				})
 				$(".commentList").html(a);
@@ -186,6 +204,9 @@ textarea {
 		        ,datatype : 'json'
 		        ,data : {'comment' : modifyComment
 		        		, 'seq' : seq}
+		    	,beforeSend: function(xhr){
+	    		xhr.setRequestHeader(header, token);
+	    		}
 		    }).done(function(data){
 		    	alert('수정완료')
 		    	if(data==1) readComment();
@@ -202,15 +223,19 @@ textarea {
 			        type : 'post'
 			        ,url : './deleteComment'
 			        ,data :{'seq' :seq}
+			    	,beforeSend: function(xhr){
+			    		xhr.setRequestHeader(header, token);
+			    	}
 			    }).done(function(data){
 			    	if(data==1) readComment();
-			    }) .fail(function(){
-			    	alert(seq)
+			    }) .fail(function(err){
+			    	alert('삭제실패')
 			    });
 			}else{
 				readComment();
 			}
 		}
+
 </script>
 </body>
-</html>
+</html>		
